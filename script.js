@@ -50,7 +50,10 @@ function sharePlan() {
     navigator.share({ title: "Taipei, in a day", text: shareText, url: window.location.href }).catch(() => {});
     return;
   }
-  navigator.clipboard?.writeText(window.location.href).then(
+  const copyPromise = navigator.clipboard
+    ? navigator.clipboard.writeText(window.location.href)
+    : Promise.reject(new Error("Clipboard API unavailable"));
+  copyPromise.then(
     () => showToast("Plan link copied — send it to the group chat."),
     () => showToast("Your Taipei day is ready to share from the address bar.")
   );
