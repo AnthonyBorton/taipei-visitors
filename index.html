@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A beautiful one-day Taipei itinerary planner for friends, food lovers, and bubble tea hunters."
+    />
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("scoutTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>One perfect day in Taipei</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Taipei day planner home">
+        <span class="brand-mark">T</span>
+        <span>
+          <strong>taipei, in a day</strong>
+          <small>made for your favorite people</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="#itinerary">Your day</a>
+        <a href="#map">The route</a>
+        <a href="#tips">Local notes</a>
+      </nav>
+      <button class="icon-button theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle color theme">
+        <span aria-hidden="true">◐</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> TAIPEI, TAIWAN · ONE DAY EDITION</p>
+          <h1>A day that tastes like <em>Taipei.</em></h1>
+          <p class="hero-lede">
+            Big views, tiny treasures, and just enough bubble tea to keep everyone smiling.
+            Pick your pace, save your stops, and let the city do the rest.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#itinerary">
+              Build my day
+              <span aria-hidden="true">↘</span>
+            </a>
+            <button class="text-button" type="button" data-action="share">
+              Share this plan
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <div class="hero-facts" aria-label="Trip summary">
+            <span><strong>5</strong> signature stops</span>
+            <span><strong>3</strong> tea breaks</span>
+            <span><strong>12.4 km</strong> city loop</span>
+          </div>
+        </div>
+        <div class="hero-gallery" aria-label="Taipei highlights">
+          <figure class="hero-image hero-image-main">
+            <img src="Taipei%20101.png" alt="Taipei 101 glowing above the city" />
+            <figcaption>
+              <span>01</span>
+              <strong>City lights, high up</strong>
+            </figcaption>
+          </figure>
+          <figure class="hero-image hero-image-small hero-image-museum">
+            <img src="National%20Palace%20Museum.png" alt="National Palace Museum in Taipei" />
+            <figcaption>
+              <span>02</span>
+              <strong>Quiet treasures</strong>
+            </figcaption>
+          </figure>
+          <figure class="hero-image hero-image-small hero-image-hall">
+            <img src="Chiang%20Kai-shek%20Memorial%20Hall.png" alt="Chiang Kai-shek Memorial Hall" />
+            <figcaption>
+              <span>03</span>
+              <strong>Blue hour steps</strong>
+            </figcaption>
+          </figure>
+          <span class="gallery-stamp">台北<br /><small>TAIPEI</small></span>
+        </div>
+      </section>
+
+      <section class="planner-toolbar page-width" aria-label="Planner controls">
+        <div class="toolbar-copy">
+          <p class="section-kicker">YOUR DAY, YOUR WAY</p>
+          <h2>Make room for good things.</h2>
+        </div>
+        <div class="planner-controls">
+          <label class="select-control">
+            <span>Start at</span>
+            <select id="start-time" aria-label="Choose start time">
+              <option value="0">08:30</option>
+              <option value="30">09:00</option>
+              <option value="60">09:30</option>
+              <option value="90">10:00</option>
+            </select>
+          </label>
+          <div class="pace-control" role="group" aria-label="Choose itinerary pace">
+            <span>Tempo</span>
+            <div class="segmented-control">
+              <button class="segment is-active" type="button" data-pace="balanced">Balanced</button>
+              <button class="segment" type="button" data-pace="slow">Slow & easy</button>
+            </div>
+          </div>
+          <button class="button button-outline save-button" type="button" data-action="save">
+            <span aria-hidden="true">♡</span> Save plan
+          </button>
+        </div>
+      </section>
+
+      <section class="content-grid page-width" id="itinerary">
+        <div class="itinerary-column">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">THE EDITED ITINERARY</p>
+              <h2>From first sip to last view</h2>
+            </div>
+            <div class="progress-summary">
+              <span id="progress-label">0 of 5 done</span>
+              <span class="progress-track"><span id="progress-bar"></span></span>
+            </div>
+          </div>
+
+          <div class="filter-row" role="group" aria-label="Filter stops">
+            <button class="filter-button is-active" type="button" data-filter="all">All stops <span>5</span></button>
+            <button class="filter-button" type="button" data-filter="tea">Bubble tea <span>3</span></button>
+            <button class="filter-button" type="button" data-filter="sight">Must-see <span>3</span></button>
+          </div>
+
+          <div class="timeline" id="timeline">
+            <article class="stop-card" id="stop-1" data-stop="1" data-category="tea" data-minutes="0">
+              <div class="timeline-marker"><span>01</span></div>
+              <div class="stop-time"><span class="time-value">08:30</span><small>morning</small></div>
+              <div class="stop-content">
+                <div class="stop-card-topline">
+                  <span class="type-pill tea-pill">bubble tea</span>
+                  <button class="check-stop" type="button" aria-label="Mark Fuhang breakfast as complete" data-check="1">○</button>
+                </div>
+                <h3>Wake up at <strong>Fuhang Soy Milk</strong></h3>
+                <p>Start with a warm dan bing, then a first Taiwanese milk tea while the city is still stretching.</p>
+                <div class="stop-meta"><span>善導寺</span><span>·</span><span>45 min</span><span>·</span><span>NT$120</span></div>
+                <div class="stop-tags"><span>Early-bird favorite</span><span>Queue-worthy</span></div>
+              </div>
+            </article>
+
+            <article class="stop-card" id="stop-2" data-stop="2" data-category="sight" data-minutes="90">
+              <div class="timeline-marker"><span>02</span></div>
+              <div class="stop-time"><span class="time-value">10:00</span><small>slow stroll</small></div>
+              <div class="stop-content">
+                <div class="stop-card-topline">
+                  <span class="type-pill sight-pill">must-see</span>
+                  <button class="check-stop" type="button" aria-label="Mark Chiang Kai-shek Memorial Hall as complete" data-check="2">○</button>
+                </div>
+                <h3>Meet the city at <strong>Chiang Kai-shek Memorial Hall</strong></h3>
+                <p>Walk the grand plaza, catch the changing of the guard, and frame the iconic blue-and-white roof.</p>
+                <div class="stop-meta"><span>中正紀念堂</span><span>·</span><span>75 min</span><span>·</span><span>Free</span></div>
+                <div class="stop-tags"><span>Photo moment</span><span>Every 60 min</span></div>
+              </div>
+            </article>
+
+            <article class="stop-card" id="stop-3" data-stop="3" data-category="tea sight" data-minutes="225">
+              <div class="timeline-marker"><span>03</span></div>
+              <div class="stop-time"><span class="time-value">12:15</span><small>museum hour</small></div>
+              <div class="stop-content">
+                <div class="stop-card-topline">
+                  <span class="type-pill tea-pill">tea + culture</span>
+                  <button class="check-stop" type="button" aria-label="Mark National Palace Museum as complete" data-check="3">○</button>
+                </div>
+                <h3>See the tiny things at <strong>National Palace Museum</strong></h3>
+                <p>Take the easy ride north for jadeite cabbage, imperial ceramics, and a calm tea pause in the gardens.</p>
+                <div class="stop-meta"><span>士林</span><span>·</span><span>2 hr</span><span>·</span><span>NT$350</span></div>
+                <div class="stop-tags"><span>Rain-proof</span><span>Gallery café</span></div>
+              </div>
+            </article>
+
+            <article class="stop-card" id="stop-4" data-stop="4" data-category="tea" data-minutes="390">
+              <div class="timeline-marker"><span>04</span></div>
+              <div class="stop-time"><span class="time-value">14:30</span><small>afternoon sip</small></div>
+              <div class="stop-content">
+                <div class="stop-card-topline">
+                  <span class="type-pill tea-pill">bubble tea</span>
+                  <button class="check-stop" type="button" aria-label="Mark Chun Shui Tang as complete" data-check="4">○</button>
+                </div>
+                <h3>Order the original at <strong>Chun Shui Tang</strong></h3>
+                <p>Back downtown, split a classic pearl milk tea and a table full of snacks before the skyline finale.</p>
+                <div class="stop-meta"><span>信義</span><span>·</span><span>35 min</span><span>·</span><span>NT$180</span></div>
+                <div class="stop-tags"><span>Classic recipe</span><span>Group-friendly</span></div>
+              </div>
+            </article>
+
+            <article class="stop-card" id="stop-5" data-stop="5" data-category="sight tea" data-minutes="450">
+              <div class="timeline-marker"><span>05</span></div>
+              <div class="stop-time"><span class="time-value">16:30</span><small>golden hour</small></div>
+              <div class="stop-content">
+                <div class="stop-card-topline">
+                  <span class="type-pill sight-pill">final view</span>
+                  <button class="check-stop" type="button" aria-label="Mark Taipei 101 as complete" data-check="5">○</button>
+                </div>
+                <h3>Go up, then look out at <strong>Taipei 101</strong></h3>
+                <p>Browse Xinyi, take the elevator to the observatory, and finish with one last brown sugar boba for the road.</p>
+                <div class="stop-meta"><span>台北101</span><span>·</span><span>2 hr</span><span>·</span><span>NT$600</span></div>
+                <div class="stop-tags"><span>Sunset window</span><span>Best finale</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="map-column" id="map">
+          <div class="map-card">
+            <div class="map-card-header">
+              <div>
+                <p class="section-kicker">THE CITY LOOP</p>
+                <h2>Follow the good stuff</h2>
+              </div>
+              <span class="map-status"><i></i> live plan</span>
+            </div>
+            <div class="map-canvas" aria-label="Stylized map showing the Taipei day planner route" role="img">
+              <div class="map-water"></div>
+              <div class="map-grid-lines"></div>
+              <div class="map-road road-one"></div>
+              <div class="map-road road-two"></div>
+              <div class="map-road road-three"></div>
+              <div class="map-road road-four"></div>
+              <div class="district-label label-shilin">SHILIN</div>
+              <div class="district-label label-zhongzheng">ZHONGZHENG</div>
+              <div class="district-label label-xinyi">XINYI</div>
+              <div class="map-route"></div>
+              <button class="map-marker marker-one" type="button" data-map-stop="1" aria-label="Go to stop 1">
+                <span>1</span>
+              </button>
+              <button class="map-marker marker-two" type="button" data-map-stop="2" aria-label="Go to stop 2">
+                <span>2</span>
+              </button>
+              <button class="map-marker marker-three" type="button" data-map-stop="3" aria-label="Go to stop 3">
+                <span>3</span>
+              </button>
+              <button class="map-marker marker-four" type="button" data-map-stop="4" aria-label="Go to stop 4">
+                <span>4</span>
+              </button>
+              <button class="map-marker marker-five" type="button" data-map-stop="5" aria-label="Go to stop 5">
+                <span>5</span>
+              </button>
+              <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
+              <div class="map-scale" aria-hidden="true"><span></span> 5 km</div>
+            </div>
+            <div class="map-card-footer">
+              <div class="route-summary">
+                <strong>12.4 km</strong>
+                <span>easy city loop · MRT + taxi</span>
+              </div>
+              <a
+                class="button button-small button-outline"
+                href="https://www.google.com/maps/dir/?api=1&origin=Fuhang+Soy+Milk&destination=Taipei+101&waypoints=Chiang+Kai-shek+Memorial+Hall%7CNational+Palace+Museum%7CChun+Shui+Tang"
+                target="_blank"
+                rel="noreferrer"
+              >Open maps <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <div class="side-note">
+            <span class="note-icon">✦</span>
+            <p><strong>Local move:</strong> Keep an EasyCard topped up. It makes the whole day feel delightfully frictionless.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="bubbletea-strip page-width" id="tips">
+        <div class="bubbletea-heading">
+          <p class="section-kicker">THE IMPORTANT PART</p>
+          <h2>Three more sips to know</h2>
+          <p>In case your group wants to turn this into a very delicious research project.</p>
+        </div>
+        <div class="tea-cards">
+          <button class="tea-card" type="button" data-tea="Xing Fu Tang">
+            <span class="tea-number">A</span>
+            <span><strong>Xing Fu Tang</strong><small>caramelized sugar pearls</small></span>
+            <span class="tea-arrow">↗</span>
+          </button>
+          <button class="tea-card" type="button" data-tea="50 Lan">
+            <span class="tea-number">B</span>
+            <span><strong>50 Lan</strong><small>easy, classic, everywhere</small></span>
+            <span class="tea-arrow">↗</span>
+          </button>
+          <button class="tea-card" type="button" data-tea="Milksha">
+            <span class="tea-number">C</span>
+            <span><strong>Milksha</strong><small>fresh milk + chewy joy</small></span>
+            <span class="tea-arrow">↗</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer page-width">
+      <div><strong>taipei, in a day</strong><span>made with curiosity + good shoes</span></div>
+      <span>台北 · TAIPEI</span>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
